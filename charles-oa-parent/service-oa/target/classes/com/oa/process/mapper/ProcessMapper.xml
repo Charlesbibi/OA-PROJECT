@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.process.mapper.ProcessMapper">
+
+    <!--IPage<ProcessVo> selectPage(Page<ProcessVo> myPage, @Param("vo") ProcessQueryVo processQueryVo);-->
+    <select id="selectPage" resultType="com.charles.vo.process.ProcessVo">
+        SELECT oap.id,oap.process_code,oap.user_id,oap.process_template_id,oap.process_type_id,
+               oap.title,oap.description,oap.form_values,oap.process_instance_id,oap.current_auditor,
+               oap.status,oap.create_time,oap.update_time,
+               opt1.name as processTemplateName,
+               opt2.name as processTypeName,
+               su.name
+        FROM oa_process oap
+        LEFT JOIN oa_process_template opt1 on opt1.id = oap.process_template_id
+        LEFT JOIN oa_process_type opt2 on opt2.id = oap.process_type_id
+        LEFT JOIN sys_user su on su.id = oap.user_id
+        <where>
+            <if test="vo.keyword != null and vo.keyword != ''">
+                and (oap.process_code like CONCAT('%',#{vo.keyword},'%') or  oap.title like CONCAT('%',#{vo.keyword},'%') or
+                     su.phone like CONCAT('%',#{vo.keyword},'%') or su.name like CONCAT('%',#{vo.keyword},'%'))
+            </if>
+            <if test="vo.userId != null and vo.userId != ''">
+                and oap.user_id = #{vo.userId}
+            </if>
+            <if test="vo.status != null and vo.status != ''">
+                and oap.status = #{vo.status}
+            </if>
+            <if test="vo.createTimeBegin != null and vo.createTimeBegin != ''">
+                and a.create_time >= #{vo.createTimeBegin}
+            </if>
+            <if test="vo.createTimeEnd != null and vo.createTimeEnd != ''">
+                and a.create_time &lt;= #{vo.createTimeEnd}
+            </if>
+        </where>
+        order by id desc
+    </select>
+</mapper>

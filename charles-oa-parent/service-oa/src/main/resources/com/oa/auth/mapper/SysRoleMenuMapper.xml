@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.auth.mapper.SysRoleMenuMapper">
+    <!--根据id获取角色id集合 List<Long> getAssignById(Long id);-->
+    <select id="getAssignById" resultType="Long">
+        SELECT menu_id FROM sys_role_menu WHERE role_id = #{id} AND is_deleted = 0
+    </select>
+
+    <!-- 删除role与menu对应关系 void deleteRoleMenu(Long id, Long id1);-->
+    <delete id="deleteRoleMenu">
+        UPDATE sys_role_menu SET is_deleted = 1 WHERE role_id = #{id} AND menu_id = #{id1}
+    </delete>
+
+    <resultMap id="SysMenu_map" type="com.charles.model.system.SysMenu"
+        autoMapping="true">
+    </resultMap>
+
+    <!--//获取所有菜单 List<SysMenu> getAllMenuById(Long userId);-->
+    <select id="getAllMenuById" resultMap="SysMenu_map">
+        SELECT distinct sm.id,sm.parent_id,sm.name,sm.type,sm.path,sm.component,sm.perms,sm.icon,
+          sm.sort_value,sm.status,sm.create_time,sm.update_time,sm.is_deleted FROM sys_menu sm
+            INNER JOIN sys_role_menu srm ON sm.id = srm.menu_id
+              INNER JOIN sys_user_role sur ON sur.role_id = srm.role_id
+                WHERE sur.user_id = #{userId} AND sm.status = 1 AND srm.is_deleted = 0
+                  AND sur.is_deleted = 0 AND sm.is_deleted = 0
+    </select>
+</mapper>
