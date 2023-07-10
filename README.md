@@ -1,3 +1,5 @@
+**[English] | [中文](./README.zh-CN.md)**
+
 # 1. charles-oa-parent
 This moudle contains all the back-end code that implements the system operations on the employee side, including employee management, job management, department management, menu management, and the operation of applications issued to employees. The application template, application process, etc.
 ## 1.1 For technology
