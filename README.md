@@ -20,6 +20,11 @@ This moudle contains all the back-end code that implements the system operations
 <activiti.version>7.1.0-M6</activiti.version>
 <springboot.version2.3.6.RELEASE</springboot.version>
 ```
+
+## 1.3 Back-end services start
+Start the Redis client and then start the server
+
+
 # 2. oa-wechat-web
 This moudle contains all front-end pages displayed after clicking on the WeChat public page, including functions such as making application, processing application, my, details, etc.
 ## 2.1 version
@@ -30,10 +35,33 @@ This moudle contains all front-end pages displayed after clicking on the WeChat 
 "element-ui": "2.13.2"
 "vue": "^2.6.11"
 ```
+## 2.2 Preparations
+
+```shell
+# install npm if version is appear that means ok  
+node -v
+npm -v
+# config npm taobao mirror (for China)
+npm config set registry http://registry.npm.taobao.org/
+
+# installation of all modules
+npm install
+```
+
+## 2.3 Start Project
+
+```shell
+npm run serve
+```
 # 3. vue-element-admin
 The template is used in this part, it provided very prowerfull visualization interface. Therefore, I use it for secondary development, adding relevant pages and interfaces to access the back-end server
 ## 3.1 version
 ```json
 "vue": "2.6.10"
 "node": "16.19.1"
+```
+
+## 3.2 The front-end service starts
+```shell
+npm run dev
 ```
