@@ -20,7 +20,36 @@
 <springboot.version2.3.6.RELEASE</springboot.version>
 ```
 ## 1.3 后端启动
-启动Redis客户端 再启动服务器
+启动Redis客户端, 然后修改名叫 `application-dev.yml` 的配置文件
+```yml
+# 选择你自己的端口号，默认访问localhost:8080
+server:
+  port: 8800
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    #选择自己的url 默认端口是3306
+    url: jdbc:mysql://localhost:3306/charles-oa?useUnicode=true&characterEncoding=UTF-8&useSSL=false   
+    username: root          #更改成自己的username 
+    password: abc123        #更改成自己的password 
+    driver-class-name: com.mysql.jdbc.Driver
+
+# 根据自己的需求来改
+redis:
+    host: localhost
+    port: 6379
+
+# 最后一个需要改的地方
+wechat:
+  mpAppId: ## 根据自己申请的来填写
+  mpAppSecret: ##
+  # 授权回调获取用户信息接口地址 免费域名需要更新
+  userInfoUrl: ##
+
+```
+再启动服务器（ServiceOAApplication是主启动类）
+
 # 2. oa-wechat-web
 本模块包含点击微信公众号后显示的所有前台页面，包括申请、处理、我的、详情等功能。
 ## 2.1 版本号
