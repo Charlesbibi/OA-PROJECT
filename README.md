@@ -4,7 +4,7 @@
 This moudle contains all the back-end code that implements the system operations on the employee side, including employee management, job management, department management, menu management, and the operation of applications issued to employees. The application template, application process, etc.
 ## 1.1 For technology
 ### Basic Framework:
-> SpringBoot + MyBatis + MyBatisPlus + Redis + 微信公众号开发
+> SpringBoot + MyBatis + MyBatisPlus + Redis + WeChat official account development
 ### Workflow Engines:
 > Activiti
 ### Testing Platform
@@ -22,7 +22,35 @@ This moudle contains all the back-end code that implements the system operations
 ```
 
 ## 1.3 Back-end services start
-Start the Redis client and then start the server
+Start the Redis client first, and modify the configuration file names `application-dev.yml` 
+```yml
+# Select your own port number to access localhost: 8080
+server:
+  port: 8800
+
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    #change the url, default port is 3306
+    url: jdbc:mysql://localhost:3306/charles-oa?useUnicode=true&characterEncoding=UTF-8&useSSL=false   
+    username: root          #change the username 
+    password: abc123        #change the password 
+    driver-class-name: com.mysql.jdbc.Driver
+
+# Modify the port and host according to your needs.
+redis:
+    host: localhost
+    port: 6379
+
+# final part need to modify
+wechat:
+  mpAppId: ## Fill in based on your own application. 
+  mpAppSecret: ##
+  # Authorize callback to obtain user information interface address. Free domain name needs to be updated.
+  userInfoUrl: ##
+
+```
+and then start the server （ServiceOAApplication is the Main launch class）
 
 
 # 2. oa-wechat-web
